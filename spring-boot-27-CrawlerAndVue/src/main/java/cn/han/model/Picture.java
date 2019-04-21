@@ -33,6 +33,30 @@ public class Picture
 
     private String path;
 
+    private String url;
+
+    private Integer failCount;
+
+    public Integer getFailCount()
+    {
+        return failCount;
+    }
+
+    public void setFailCount(Integer failCount)
+    {
+        this.failCount = failCount;
+    }
+
+    public String getUrl()
+    {
+        return url;
+    }
+
+    public void setUrl(String url)
+    {
+        this.url = url;
+    }
+
     public long getId()
     {
         return id;

@@ -22,10 +22,6 @@ public class TeamBiz
     TeamRepository teamRepository;
     public  static String baseUrl ="http://server.goteaming.com.cn/";
     public  static  String url =  "http://server.goteaming.com.cn/Player_Base/Game/GetTeamDataSource";
-    public Team save(Team team){
-        return  teamRepository.save(team);
-    }
-
     public void save(TeamRepo teamRepo){
         for (int i = 0; i < teamRepo.names.size(); i++)
         {
@@ -52,6 +48,7 @@ public class TeamBiz
                 String filePath = "d:/temp/"+team.getName()+team.getUuid()+"/"+picture.getName()+".jpg";
                 //HttpDownload.download(baseUrl+picture.getPath(),filePath);
                 System.out.println("下载成功路径为："+filePath);
+                picture.setUrl(baseUrl+picture.getPath());
                 picture.setPath(filePath);
                 team.getPictures().add(picture);
             }
@@ -68,6 +65,7 @@ public class TeamBiz
                 String filePath = "d:/temp/"+team.getName()+team.getUuid()+"/"+video.getName()+".jpg";
                 //HttpDownload.download(baseUrl+video.getPath(),filePath);
                 System.out.println("下载成功路径为："+filePath);
+                video.setUrl(baseUrl+video.getPath());
                 video.setPath(filePath);
                 team.getVideos().add(video);
             }

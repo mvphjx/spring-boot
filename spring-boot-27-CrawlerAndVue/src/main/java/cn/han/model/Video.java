@@ -27,11 +27,34 @@ public class Video
     @Column(length = 64)
     private String uuid;
 
-    @ManyToOne(cascade= CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "team_id")
     private Team team;
 
     private String path;
+
+    private String url;
+    private Integer failCount;
+
+    public Integer getFailCount()
+    {
+        return failCount;
+    }
+
+    public void setFailCount(Integer failCount)
+    {
+        this.failCount = failCount;
+    }
+
+    public String getUrl()
+    {
+        return url;
+    }
+
+    public void setUrl(String url)
+    {
+        this.url = url;
+    }
 
     public long getId()
     {
