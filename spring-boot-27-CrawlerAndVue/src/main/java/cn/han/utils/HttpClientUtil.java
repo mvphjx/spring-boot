@@ -1,9 +1,4 @@
-package cn.timebusker.utils;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+package cn.han.utils;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -16,6 +11,12 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 /**
  * HttpClientUtil 工具类型封装了http协议 通过 get post交互
@@ -48,7 +49,6 @@ public final class HttpClientUtil {
             throw new RuntimeException(error);
         }
     }
-
     public static String get(String requestURI, Map<String, String> header) {
         return HttpClientUtil.get(requestURI, header, DEFAULT_CHARSET);
     }

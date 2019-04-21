@@ -1,11 +1,11 @@
-package cn.timebusker.utils;
-
-import java.nio.charset.Charset;
+package cn.han.utils;
 
 import org.apache.http.config.ConnectionConfig;
 import org.apache.http.conn.HttpClientConnectionManager;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+
+import java.nio.charset.Charset;
 
 public final class HttpClientFactory {
 
