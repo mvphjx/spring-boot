@@ -3,11 +3,16 @@ package cn.han.service.team;
 import cn.han.model.Picture;
 import cn.han.model.Team;
 import cn.han.model.Video;
+import cn.han.repository.PicRepository;
 import cn.han.repository.TeamRepository;
+import cn.han.repository.VideoRepository;
 import cn.han.service.webcrawler.TeamRepo;
 import cn.han.utils.HttpClientUtil;
+import cn.han.web.CrawlerCtrl;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -20,9 +25,19 @@ public class TeamBiz
 {
     @Resource
     TeamRepository teamRepository;
+    @Resource
+    PicRepository picRepository;
+    @Resource
+    VideoRepository videoRepository;
+    private final static Logger logger = LoggerFactory.getLogger(TeamBiz.class);
     public  static String baseUrl ="http://server.goteaming.com.cn/";
     public  static  String url =  "http://server.goteaming.com.cn/Player_Base/Game/GetTeamDataSource";
-    public void save(TeamRepo teamRepo){
+
+    /**
+     * 初次 保存全部队伍信息
+     * @param teamRepo
+     */
+    public void init(TeamRepo teamRepo){
         for (int i = 0; i < teamRepo.names.size(); i++)
         {
             Team team = new Team();
@@ -30,6 +45,11 @@ public class TeamBiz
             team.setUuid(teamRepo.uuids.get(i));
             team.setVideos(new ArrayList<>());
             team.setPictures(new ArrayList<>());
+            Team teamByUuid = teamRepository.findByUuid(team.getUuid());
+            if(teamByUuid!=null){
+                logger.info("队伍已存在："+team);
+                continue;
+            }
             String  teamDataUri = url+"?GTId="+teamRepo.uuids.get(i);
             Map<String,String> header = new HashMap<>();
             header.put("User-Agent","Mozilla/5.0 (Linux; U; Android 2.3.6; zh-cn; GT-S5660 Build/GINGERBREAD) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1 MicroMessenger/4.5.255");
@@ -71,6 +91,21 @@ public class TeamBiz
             }
             teamRepository.save(team);
         }
+    }
+    /**
+     * 保存单个图片
+     * @param picture
+     */
+    public void save(Picture picture){
+
+    }
+
+    /**
+     * 保存视频
+     * @param video
+     */
+    public void save(Video video){
+
     }
 
 

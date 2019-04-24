@@ -5,10 +5,8 @@ import cn.han.service.webcrawler.TeamRepo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import us.codecraft.webmagic.ResultItems;
 import us.codecraft.webmagic.Site;
@@ -25,7 +23,7 @@ import java.util.HashMap;
 @RestController
 public class CrawlerCtrl
 {
-    private final static Logger logger = LoggerFactory.getLogger(IndexController.class);
+    private final static Logger logger = LoggerFactory.getLogger(CrawlerCtrl.class);
 
     @Autowired
     private TeamBiz teamBiz;
@@ -48,7 +46,7 @@ public class CrawlerCtrl
         while (spider.getThreadAlive()>0){
             Thread.sleep(100);
         }
-        teamBiz.save(teamRepo[0]);
+        teamBiz.init(teamRepo[0]);
         HashMap<String,String> hashMap = new HashMap<String,String>();
         hashMap.put("status","ok");
         return hashMap;
