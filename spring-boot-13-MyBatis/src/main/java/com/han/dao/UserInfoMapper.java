@@ -1,4 +1,4 @@
-package cn.timebusker.dao;
+package com.han.dao;
 
 import java.util.List;
 import java.util.Map;
@@ -10,9 +10,10 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.SelectKey;
 import org.apache.ibatis.annotations.Update;
 
-import cn.timebusker.entity.UserInfo;
+import com.han.entity.UserInfo;
 
 /**
  * 基于注解实现持久化操作
@@ -27,9 +28,9 @@ public interface UserInfoMapper {
 	@Select("SELECT * FROM user_info WHERE id = #{id}")
 	List<UserInfo> findById(@Param("id") int id);
 
-	@Insert("INSERT INTO user_info(Id,username,password,usertype,enabled,realname,email,tel) VALUES(#{id}, #{username},#{password}, #{usertype},#{enabled}, #{realname},#{email}, #{tel})")
+	@Insert("INSERT INTO user_info(username,usertype,enabled,realname,email,tel) VALUES(#{username}, #{usertype},#{enabled}, #{realname},#{email}, #{tel})")
+	@SelectKey(statement="select LAST_INSERT_ID()", keyProperty="id", before=false, resultType=int.class)
 	int insert(UserInfo ui);
-
 	// 两个语句实现效果一致
 	// @Insert("INSERT INTO user_info(Id,username,password,usertype,enabled,realname,email,tel) VALUES(#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR},#{password,jdbcType=VARCHAR}, #{usertype,jdbcType=VARCHAR},#{enabled,jdbcType=INTEGER}, #{realname,jdbcType=VARCHAR},#{email,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR})")
 	@Insert("INSERT INTO user_info(Id,username,password,usertype,enabled,realname,email,tel) VALUES(#{id}, #{username},#{password}, #{usertype},#{enabled}, #{realname},#{email}, #{tel})")
@@ -47,4 +48,12 @@ public interface UserInfoMapper {
 	@Results({ @Result(property = "username", column = "username"), @Result(property = "realname", column = "realname") })
 	@Select("SELECT username,realname FROM user_info WHERE 1=1")
 	List<UserInfo> queryById();
+	/**
+	 * 自定义查询
+	 * @return
+	 */
+	@Select("select info.*,password from user_info info left join user_password on info.id=userid WHERE 1=1")
+	List<Map<String,Object>> commonSearch();
+
+
 }
