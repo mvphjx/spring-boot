@@ -1,0 +1,76 @@
+package com.han.service.query;
+
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.han.dao.TableInfoMapper;
+import com.han.model.Team;
+import com.han.repository.TeamPagingAndSortRespository;
+import com.han.vo.PageModel;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+@Service
+public class QueryBiz
+{
+    @Autowired
+    JdbcTemplate jdbcTemplate;
+    @Autowired
+    TableInfoMapper teamInfoMapper;
+    @Autowired
+    private TeamPagingAndSortRespository pagingAndSortRespository;
+
+    /**
+     * 基于springdata的分页
+     * @param params
+     * @return
+     */
+    public PageModel queryTeamByRespository(Map<String, Object> params)
+    {
+        int page = Integer.valueOf(params.get("page").toString()) - 1;
+        int size = Integer.valueOf(params.get("limit").toString());
+        PageRequest pageRequest = new PageRequest(page, size);
+        Page<Team> teamPage = pagingAndSortRespository.findAll(pageRequest);
+        PageModel listModel = new PageModel();
+        listModel.code = 20000;
+        HashMap<Object, Object> map = new HashMap<>();
+        map.put("total", teamPage.getTotalElements());
+        for (Team team : teamPage.getContent())
+        {
+            team.setVideos(null);
+            team.setPictures(null);
+        }
+        map.put("items", teamPage.getContent());
+        listModel.data = map;
+
+        return listModel;
+    }
+
+    /**
+     * 基于mybatis的分页
+     * @param params
+     * @return
+     */
+    public PageModel queryTeamByMybatis(Map<String, Object> params)
+    {
+        int page = Integer.valueOf(params.get("page").toString());
+        int size = Integer.valueOf(params.get("limit").toString());
+        PageHelper.startPage(page, size);
+        List<Map<String, Object>> maps = teamInfoMapper.query(params);
+        PageInfo<Map<String, Object>> pageInfo = new PageInfo<>(maps);
+        PageModel listModel = new PageModel();
+        listModel.code = 20000;
+        HashMap<Object, Object> map = new HashMap<>();
+        listModel.data = new HashMap<>();
+        map.put("total", pageInfo.getTotal());
+        map.put("items", pageInfo.getList());
+        listModel.data = map;
+        return listModel;
+    }
+}

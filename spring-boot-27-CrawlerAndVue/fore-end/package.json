@@ -6,6 +6,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "vue-cli-service serve",
+    "lint&fix": "npm run lint  -- --fix",
     "build:prod": "vue-cli-service build",
     "build:stage": "vue-cli-service build --mode staging",
     "npm:install": "npm install --registry=https://registry.npm.taobao.org",
@@ -17,7 +18,7 @@
   },
   "dependencies": {
     "axios": "0.18.0",
-    "element-ui": "2.7.2",
+    "element-ui": "2.8.2",
     "js-cookie": "2.2.0",
     "normalize.css": "7.0.0",
     "nprogress": "0.2.0",

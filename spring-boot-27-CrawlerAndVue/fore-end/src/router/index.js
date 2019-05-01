@@ -98,7 +98,7 @@ export const constantRoutes = [
         path: 'index',
         name: 'Team',
         component: () => import('@/views/team/list'),
-        meta: { title: '最强战队' , icon: 'tree'}
+        meta: { title: '最强战队', icon: 'tree' }
       },
       {
         path: 'detail/:uuid',
