@@ -1,4 +1,4 @@
-package com.han.model;
+package com.han.jpa.model;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -11,11 +11,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
- * 队伍图像
+ * 队伍视频
  */
 @Entity
-@Table(name = "t_picture")
-public class Picture
+@Table(name = "t_video")
+public class Video
 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,14 +27,13 @@ public class Picture
     @Column(length = 64)
     private String uuid;
 
-    @ManyToOne(cascade= CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "team_id")
     private Team team;
 
     private String path;
 
     private String url;
-
     private Integer failCount;
 
     public Integer getFailCount()
@@ -110,7 +109,7 @@ public class Picture
     @Override
     public String toString()
     {
-        return "Picture{" + "id=" + id + ", name='" + name + '\'' + ", uuid='" + uuid + '\'' + ", team=" + team
+        return "Video{" + "id=" + id + ", name='" + name + '\'' + ", uuid='" + uuid + '\'' + ", team=" + team
                 + ", path='" + path + '\'' + '}';
     }
 }

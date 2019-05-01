@@ -1,4 +1,4 @@
-package com.han.model;
+package com.han.jpa.model;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;

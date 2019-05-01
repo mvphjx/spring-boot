@@ -2,13 +2,13 @@ package com.han.service.team;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.han.model.Picture;
-import com.han.model.Team;
-import com.han.model.Video;
-import com.han.repository.PicRepository;
-import com.han.repository.TeamRepository;
-import com.han.repository.VideoRepository;
-import com.han.service.webcrawler.TeamRepo;
+import com.han.jpa.model.Picture;
+import com.han.jpa.model.Team;
+import com.han.jpa.model.Video;
+import com.han.jpa.repository.PicRepository;
+import com.han.jpa.repository.TeamRepository;
+import com.han.jpa.repository.VideoRepository;
+import com.han.service.webcrawler.simple.TeamRepo;
 import com.han.utils.HttpClientUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +18,6 @@ import org.springframework.util.StringUtils;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Service

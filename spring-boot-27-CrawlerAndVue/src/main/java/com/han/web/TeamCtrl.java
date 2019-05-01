@@ -1,14 +1,14 @@
 package com.han.web;
 
-import com.han.model.Picture;
-import com.han.model.Team;
-import com.han.model.Video;
-import com.han.repository.PicRepository;
-import com.han.repository.TeamRepository;
-import com.han.repository.VideoRepository;
+import com.han.jpa.model.Picture;
+import com.han.jpa.model.Team;
+import com.han.jpa.model.Video;
+import com.han.jpa.repository.PicRepository;
+import com.han.jpa.repository.TeamRepository;
+import com.han.jpa.repository.VideoRepository;
 import com.han.service.query.QueryBiz;
 import com.han.utils.FileUtil;
-import com.han.vo.PageModel;
+import com.han.mybatis.vo.PageModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,12 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.HashMap;
 import java.util.Map;
 
 @RestController

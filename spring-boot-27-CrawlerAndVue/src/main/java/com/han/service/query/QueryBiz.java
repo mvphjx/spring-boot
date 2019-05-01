@@ -2,10 +2,10 @@ package com.han.service.query;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.han.dao.TableInfoMapper;
-import com.han.model.Team;
-import com.han.repository.TeamPagingAndSortRespository;
-import com.han.vo.PageModel;
+import com.han.mybatis.dao.TableInfoMapper;
+import com.han.jpa.model.Team;
+import com.han.jpa.repository.TeamPagingAndSortRespository;
+import com.han.mybatis.vo.PageModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

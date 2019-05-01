@@ -1,4 +1,4 @@
-package com.han.service.webcrawler;
+package com.han.service.webcrawler.simple;
 
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;

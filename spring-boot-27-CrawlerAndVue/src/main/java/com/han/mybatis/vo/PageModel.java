@@ -1,4 +1,4 @@
-package com.han.vo;
+package com.han.mybatis.vo;
 
 import java.util.Map;
 

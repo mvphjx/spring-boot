@@ -1,26 +1,17 @@
 package com.han.test;
 
-import com.alibaba.fastjson.JSON;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.han.CrawlerApp;
-import com.han.dao.TableInfoMapper;
-import com.han.model.Picture;
-import com.han.model.Team;
-import com.han.model.Video;
-import com.han.repository.TeamRepository;
-import com.han.repository.VideoRepository;
+import com.han.jpa.model.Picture;
+import com.han.jpa.model.Team;
+import com.han.jpa.model.Video;
+import com.han.jpa.repository.VideoRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = CrawlerApp.class)

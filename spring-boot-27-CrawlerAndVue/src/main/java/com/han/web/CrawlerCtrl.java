@@ -1,7 +1,7 @@
 package com.han.web;
 
 import com.han.service.team.TeamBiz;
-import com.han.service.webcrawler.TeamRepo;
+import com.han.service.webcrawler.simple.TeamRepo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +44,7 @@ public class CrawlerCtrl
             @Override
             public void process(ResultItems resultItems, Task task)
             {
-                teamRepo[0] = resultItems.get("com.han.service.webcrawler.TeamRepo");
+                teamRepo[0] = resultItems.get("com.han.service.webcrawler.simple.TeamRepo");
             }
         });
         spider.run();

@@ -1,4 +1,4 @@
-package com.han.service.webcrawler;
+package com.han.service.webcrawler.simple;
 
 import org.springframework.stereotype.Service;
 import us.codecraft.webmagic.ResultItems;

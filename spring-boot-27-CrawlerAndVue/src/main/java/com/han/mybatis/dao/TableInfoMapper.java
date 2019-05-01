@@ -1,4 +1,4 @@
-package com.han.dao;
+package com.han.mybatis.dao;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
