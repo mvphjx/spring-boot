@@ -2,9 +2,9 @@ package com.han.service.query;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.han.mybatis.dao.TableInfoMapper;
 import com.han.jpa.model.Team;
-import com.han.jpa.repository.TeamPagingAndSortRespository;
+import com.han.jpa.repository.TeamRepository;
+import com.han.mybatis.dao.TableInfoMapper;
 import com.han.mybatis.vo.PageModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -22,21 +22,27 @@ public class QueryBiz
     @Autowired
     JdbcTemplate jdbcTemplate;
     @Autowired
-    TableInfoMapper teamInfoMapper;
+    TeamRepository teamRepository;
     @Autowired
-    private TeamPagingAndSortRespository pagingAndSortRespository;
+    TableInfoMapper teamInfoMapper;
 
     /**
      * 基于springdata的分页
+     *
      * @param params
      * @return
      */
     public PageModel queryTeamByRespository(Map<String, Object> params)
     {
-        int page = Integer.valueOf(params.get("page").toString()) - 1;
-        int size = Integer.valueOf(params.get("limit").toString());
+        int page = 0;
+        int size = 20;
+        if (params != null)
+        {
+            page = Integer.valueOf(params.get("page").toString()) - 1;
+            size = Integer.valueOf(params.get("limit").toString());
+        }
         PageRequest pageRequest = new PageRequest(page, size);
-        Page<Team> teamPage = pagingAndSortRespository.findAll(pageRequest);
+        Page<Team> teamPage = teamRepository.findAll(pageRequest);
         PageModel listModel = new PageModel();
         listModel.code = 20000;
         HashMap<Object, Object> map = new HashMap<>();
@@ -54,13 +60,19 @@ public class QueryBiz
 
     /**
      * 基于mybatis的分页
+     *
      * @param params
      * @return
      */
     public PageModel queryTeamByMybatis(Map<String, Object> params)
     {
-        int page = Integer.valueOf(params.get("page").toString());
-        int size = Integer.valueOf(params.get("limit").toString());
+        int page = 1;
+        int size = 20;
+        if (params != null)
+        {
+            page = Integer.valueOf(params.get("page").toString());
+            size = Integer.valueOf(params.get("limit").toString());
+        }
         PageHelper.startPage(page, size);
         List<Map<String, Object>> maps = teamInfoMapper.query(params);
         PageInfo<Map<String, Object>> pageInfo = new PageInfo<>(maps);
