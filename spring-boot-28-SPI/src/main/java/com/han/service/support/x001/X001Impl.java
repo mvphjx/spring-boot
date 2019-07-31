@@ -1,7 +1,7 @@
-package com.han.service.x001;
+package com.han.service.support.x001;
 
 import com.han.spi.IAresService;
-import com.han.spi.data.ServiceInfo;
+import com.han.spi.data.AresServiceInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -25,16 +25,16 @@ import org.springframework.stereotype.Component;
 @ConditionalOnProperty(prefix = "x001 ", value = "enabled", havingValue = "true")
 public class X001Impl implements IAresService
 {
-    private ServiceInfo info;
+    private AresServiceInfo info;
     @Autowired
     private X001Properties properties;
 
     @Override
-    public ServiceInfo getServiceInfo()
+    public AresServiceInfo getServiceInfo()
     {
         if (info == null)
         {
-            info = new ServiceInfo();
+            info = new AresServiceInfo();
             info.setSystemId("X001Impl");
             System.out.println("properties:"+properties);
         }

@@ -7,7 +7,7 @@ package com.han.spi.data;
  *         www.hisign.com.cn<br>
  *         创建日期：   2019/7/30 13:54
  */
-public class ServiceInfo
+public class AresServiceInfo
 {
     private String systemId;
 
@@ -24,6 +24,6 @@ public class ServiceInfo
     @Override
     public String toString()
     {
-        return "ServiceInfo{" + "systemId='" + systemId + '\'' + '}';
+        return "AresServiceInfo{" + "systemId='" + systemId + '\'' + '}';
     }
 }

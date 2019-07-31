@@ -1,7 +1,7 @@
-package com.han.service.x002;
+package com.han.service.support.x002;
 
 import com.han.spi.IAresService;
-import com.han.spi.data.ServiceInfo;
+import com.han.spi.data.AresServiceInfo;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.stereotype.Component;
 
@@ -17,15 +17,15 @@ import org.springframework.stereotype.Component;
 @ConditionalOnClass
 public class X002Impl implements IAresService
 {
-    private ServiceInfo info;
+    private AresServiceInfo info;
 
 
     @Override
-    public ServiceInfo getServiceInfo()
+    public AresServiceInfo getServiceInfo()
     {
         if (info == null)
         {
-            info = new ServiceInfo();
+            info = new AresServiceInfo();
             info.setSystemId("X002Impl");
         }
         return info;

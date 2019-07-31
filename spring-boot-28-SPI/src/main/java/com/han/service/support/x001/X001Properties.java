@@ -1,4 +1,4 @@
-package com.han.service.x001;
+package com.han.service.support.x001;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

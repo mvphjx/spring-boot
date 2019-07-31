@@ -1,8 +1,8 @@
 package com.han.spi;
 
-import com.han.spi.data.ServiceInfo;
+import com.han.spi.data.AresServiceInfo;
 
 public interface IAresService
 {
-    ServiceInfo getServiceInfo();
+    AresServiceInfo getServiceInfo();
 }
