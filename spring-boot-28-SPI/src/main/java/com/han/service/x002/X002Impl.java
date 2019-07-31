@@ -1,12 +1,8 @@
-package com.han.spi.impl.x002;
+package com.han.service.x002;
 
 import com.han.spi.IAresService;
 import com.han.spi.data.ServiceInfo;
-import com.han.spi.impl.x001.X001Properties;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 /**

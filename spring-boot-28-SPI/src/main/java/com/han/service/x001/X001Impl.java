@@ -1,4 +1,4 @@
-package com.han.spi.impl.x001;
+package com.han.service.x001;
 
 import com.han.spi.IAresService;
 import com.han.spi.data.ServiceInfo;
