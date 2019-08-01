@@ -1,8 +1,6 @@
 package com.han.spi;
 
-import com.han.spi.data.AresServiceInfo;
-
-public interface IAresService
+public interface IAresService extends IAresTPService, IAresLPService, IAresMatchService
 {
-    AresServiceInfo getServiceInfo();
+    String test();
 }

@@ -1,25 +1,44 @@
 package com.han.service.manage;
 
 import com.han.spi.IAresService;
+import com.han.spi.data.AresServiceInfo;
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.util.HashMap;
 
 /**
- * spi 服务模块管理
+ * Ares服务管理组件
  */
 @Component
 public class ServiceMgr
 {
+    @Autowired
+    private ApplicationContext applicationContext;
+
     //服务模块缓存
     private HashMap<String, IAresService> _classMappings = new HashMap<String, IAresService>();
 
     /**
-     * 根据配置文件 模块初始化
+     * 根据注解初始化
+     *      注册服务
      */
-    public void init() throws Exception
+    @PostConstruct
+    private void init() throws BeansException
     {
-        addService("1_1_Wuxi", Class.forName("com.hisign.pu.abis.ares.spi.impl.xzpt.LPBaseInfoService"));
+        System.out.println("\n\n-----------------Registry Ares Service-----------------------");
+        String[] beanNamesForType = applicationContext.getBeanNamesForType(IAresService.class);
+        for (String s : beanNamesForType)
+        {
+            IAresService aresService = (IAresService) applicationContext.getBean(s);
+            AresServiceInfo serviceInfo = aresService.getServiceInfo();
+            System.out.println(serviceInfo);
+            String key = getKey(serviceInfo.getSystemId(), serviceInfo.getDataType(), serviceInfo.getSubDBName());
+            _classMappings.put(key,aresService);
+        }
     }
 
     /**

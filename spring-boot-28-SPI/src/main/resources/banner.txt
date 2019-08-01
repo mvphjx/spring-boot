@@ -1,0 +1,3 @@
+${AnsiColor.GREEN}HABIS ARES SERVER Start
+${AnsiColor.GREEN}Spring Boot Version : ${spring-boot.version} ${spring-boot.formatted-version}
+

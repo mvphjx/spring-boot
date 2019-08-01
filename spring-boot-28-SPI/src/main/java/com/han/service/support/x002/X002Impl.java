@@ -1,9 +1,9 @@
 package com.han.service.support.x002;
 
-import com.han.spi.IAresService;
+import com.han.spi.IAresTPService;
 import com.han.spi.data.AresServiceInfo;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 /**
  * 自动配置类
@@ -13,9 +13,9 @@ import org.springframework.stereotype.Component;
  * @ConditionalOnProperty(prefix = "calculate ",value = "enabled",havingValue = "true")，
  * 当配置文件中calculate.enabled=true时。
  */
-@Component("x002")
+@Service("x002")
 @ConditionalOnClass
-public class X002Impl implements IAresService
+public class X002Impl implements IAresTPService
 {
     private AresServiceInfo info;
 

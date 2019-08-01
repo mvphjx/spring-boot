@@ -2,7 +2,7 @@ package com.han.service.support.x001;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-@ConfigurationProperties(prefix = "x001",locations="")
+@ConfigurationProperties(prefix = "x001")
 public class X001Properties
 {
     private String url;
