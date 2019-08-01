@@ -45,6 +45,7 @@ public class SentinelApp
         return new RestTemplate();
     }
 
+    //QPS限流
     private static void initFlowRules(){
         List<FlowRule> rules = new ArrayList<>();
         FlowRule rule = new FlowRule();
@@ -56,6 +57,7 @@ public class SentinelApp
         FlowRuleManager.loadRules(rules);
     }
 
+    //熔断机制
     private static void initDegradeRule() {
         List<DegradeRule> rules = new ArrayList<>();
         DegradeRule rule = new DegradeRule();

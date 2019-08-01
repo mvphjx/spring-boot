@@ -24,7 +24,7 @@ public class ServiceMgr
 
     /**
      * 根据注解初始化
-     *      注册服务
+     * 注册服务
      */
     @PostConstruct
     private void init() throws BeansException
@@ -37,7 +37,7 @@ public class ServiceMgr
             AresServiceInfo serviceInfo = aresService.getServiceInfo();
             System.out.println(serviceInfo);
             String key = getKey(serviceInfo.getSystemId(), serviceInfo.getDataType(), serviceInfo.getSubDBName());
-            _classMappings.put(key,aresService);
+            _classMappings.put(key, aresService);
         }
     }
 
@@ -61,10 +61,11 @@ public class ServiceMgr
      * @param key
      * @param forClass
      */
-    private void addService(String key, Class forClass) throws IllegalAccessException, InstantiationException
+    private void addService(String key, Class<? extends IAresService> forClass)
+            throws IllegalAccessException, InstantiationException
     {
 
-        _classMappings.put(key, (IAresService) forClass.newInstance());
+        _classMappings.put(key, forClass.newInstance());
     }
 
     private String getKey(String systemId, String dataType, String subDBName)

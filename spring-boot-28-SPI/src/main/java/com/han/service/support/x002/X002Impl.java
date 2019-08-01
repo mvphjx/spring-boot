@@ -1,6 +1,7 @@
 package com.han.service.support.x002;
 
 import com.han.spi.IAresTPService;
+import com.han.spi.data.AresMessageObject;
 import com.han.spi.data.AresServiceInfo;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.stereotype.Service;
@@ -29,5 +30,11 @@ public class X002Impl implements IAresTPService
             info.setSystemId("X002Impl");
         }
         return info;
+    }
+
+    @Override
+    public AresMessageObject search(String systemId, String dataType, String subDBName)
+    {
+        return null;
     }
 }

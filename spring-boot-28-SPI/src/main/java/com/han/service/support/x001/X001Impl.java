@@ -1,6 +1,7 @@
 package com.han.service.support.x001;
 
 import com.han.spi.IAresService;
+import com.han.spi.data.AresMessageObject;
 import com.han.spi.data.AresServiceInfo;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
@@ -45,6 +46,12 @@ public class X001Impl implements IAresService
             System.out.println("properties:" + properties);
         }
         return info;
+    }
+
+    @Override
+    public AresMessageObject search(String systemId, String dataType, String subDBName)
+    {
+        return null;
     }
 
     @HystrixCommand(fallbackMethod = "fallback", threadPoolProperties = {
