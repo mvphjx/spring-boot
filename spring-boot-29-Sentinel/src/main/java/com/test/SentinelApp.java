@@ -1,5 +1,7 @@
 package com.test;
 
+import com.alibaba.csp.sentinel.datasource.Converter;
+import com.alibaba.csp.sentinel.datasource.FileRefreshableDataSource;
 import com.alibaba.csp.sentinel.slots.block.RuleConstant;
 import com.alibaba.csp.sentinel.slots.block.degrade.DegradeRule;
 import com.alibaba.csp.sentinel.slots.block.degrade.DegradeRuleManager;
@@ -7,15 +9,16 @@ import com.alibaba.csp.sentinel.slots.block.flow.FlowRule;
 import com.alibaba.csp.sentinel.slots.block.flow.FlowRuleManager;
 import com.alibaba.csp.sentinel.slots.system.SystemRule;
 import com.alibaba.csp.sentinel.slots.system.SystemRuleManager;
-import com.test.util.ExceptionUtil;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.alibaba.sentinel.annotation.SentinelRestTemplate;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
 
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -34,47 +37,100 @@ public class SentinelApp
         {
             System.out.println(beanName);
         }
+        initFileRule();
         initFlowRules();
-        initDegradeRule();
+        //initDegradeRule();
     }
 
     @Bean
     @LoadBalanced
-//    @SentinelRestTemplate(blockHandler = "handleException", blockHandlerClass = ExceptionUtil.class)
-    public RestTemplate restTemplate() {
+    public RestTemplate restTemplate()
+    {
         return new RestTemplate();
     }
 
-    //QPS限流
-    private static void initFlowRules(){
+    //流量控制 QPS
+    private static void initFlowRules()
+    {
+        List<FlowRule> rules = new ArrayList<>();
+        FlowRule rule = new FlowRule();
+        rule.setResource("timeOut");
+        rule.setGrade(RuleConstant.FLOW_GRADE_QPS);
+        // Set limit QPS to 20.
+        rule.setCount(20);
+        rule.setMaxQueueingTimeMs(10);
+        rules.add(rule);
+        FlowRuleManager.loadRules(rules);
+    }
+
+    //流量控制 线程数
+    private static void initFlowThreadRules()
+    {
         List<FlowRule> rules = new ArrayList<>();
         FlowRule rule = new FlowRule();
         rule.setResource("user");
-        rule.setGrade(RuleConstant.FLOW_GRADE_QPS);
+        rule.setGrade(RuleConstant.FLOW_GRADE_THREAD);
         // Set limit QPS to 20.
         rule.setCount(20);
         rules.add(rule);
         FlowRuleManager.loadRules(rules);
     }
 
-    //熔断机制
-    private static void initDegradeRule() {
+    //熔断降级规则
+    private static void initDegradeRule()
+    {
         List<DegradeRule> rules = new ArrayList<>();
+        //超时降级  平均时间
         DegradeRule rule = new DegradeRule();
-        rule.setResource("user");
-        // set threshold RT, 10 ms
+        rule.setResource("timeOut");
         rule.setCount(5);
         rule.setGrade(RuleConstant.DEGRADE_GRADE_RT);
         rule.setTimeWindow(30);
+        //异常降级
+        DegradeRule exceptionRule = new DegradeRule();
+        exceptionRule.setResource("exception");
+        exceptionRule.setCount(4);
+        exceptionRule.setGrade(RuleConstant.DEGRADE_GRADE_EXCEPTION_COUNT);
+        exceptionRule.setTimeWindow(30);
         rules.add(rule);
+        rules.add(exceptionRule);
         DegradeRuleManager.loadRules(rules);
     }
 
-    private void initSystemRule() {
+    //系统保护规则
+    private static void initSystemRule()
+    {
         List<SystemRule> rules = new ArrayList<>();
         SystemRule rule = new SystemRule();
         rule.setHighestSystemLoad(10);
         rules.add(rule);
         SystemRuleManager.loadRules(rules);
     }
+
+    /**
+     * 从文件加载 规则
+     */
+    private static Converter<String, List<DegradeRule>> degradeRuleListParser = source -> JSON
+            .parseObject(source, new TypeReference<List<DegradeRule>>()
+            {
+            });
+
+    private static void initFileRule()
+    {
+        try
+        {
+            ClassLoader classLoader = SentinelApp.class.getClassLoader();
+            String degradeRulePath = URLDecoder.decode(classLoader.getResource("DegradeRule.json").getFile(), "UTF-8");
+            // Data source for DegradeRule
+            FileRefreshableDataSource<List<DegradeRule>> degradeRuleDataSource = new FileRefreshableDataSource<>(
+                    degradeRulePath, degradeRuleListParser);
+            DegradeRuleManager.register2Property(degradeRuleDataSource.getProperty());
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+    }
+
 }

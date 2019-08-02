@@ -1,19 +1,28 @@
-package com.test.service;
+package com.han.service;
 
+import com.han.spi.IAresService;
+import com.han.spi.data.AresMessageObject;
+import com.han.spi.data.AresServiceInfo;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Random;
 
 @Service
-public class TestService
+@ConditionalOnClass
+//当配置 x001.enabled=true 时加载
+@ConditionalOnProperty(prefix = "x001 ", value = "enabled", havingValue = "true")
+public class TestService implements IAresService
 {
 
     @Autowired
     private RestTemplate restTemplate;
+    private AresServiceInfo info;
 
     //随机运行时间
     @HystrixCommand(fallbackMethod = "fallback", threadPoolProperties = {
@@ -25,6 +34,7 @@ public class TestService
             @HystrixProperty(name = "circuitBreaker.sleepWindowInMilliseconds", value = "10000") })
     public String timeOut()
     {
+        System.out.println(Thread.currentThread().getName());
         int i = new Random().nextInt(4000);
         try
         {
@@ -42,8 +52,7 @@ public class TestService
     //随机异常
     public String exception() throws Exception
     {
-        Thread th=Thread.currentThread();
-        System.out.println(th.getName());
+        System.out.println(Thread.currentThread().getName());
         int i = new Random().nextInt(20);
         if (i <= 10)
         {
@@ -59,4 +68,26 @@ public class TestService
         return "快速失败";
     }
 
+    @Override
+    public String test()
+    {
+        return timeOut();
+    }
+
+    @Override
+    public AresServiceInfo getServiceInfo()
+    {
+        if (info == null)
+        {
+            info = new AresServiceInfo();
+            info.setSystemId("test");
+        }
+        return info;
+    }
+
+    @Override
+    public AresMessageObject search(String systemId, String dataType, String subDBName)
+    {
+        return null;
+    }
 }

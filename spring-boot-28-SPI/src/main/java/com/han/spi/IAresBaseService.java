@@ -9,4 +9,6 @@ public interface IAresBaseService
 
     AresMessageObject search(String systemId, String dataType, String subDBName);
 
+    String test();
+
 }

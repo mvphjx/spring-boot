@@ -1,5 +1,6 @@
 package com.han.service.manage;
 
+import com.han.spi.IAresBaseService;
 import com.han.spi.IAresService;
 import com.han.spi.data.AresServiceInfo;
 import org.springframework.beans.BeansException;
@@ -20,7 +21,7 @@ public class ServiceMgr
     private ApplicationContext applicationContext;
 
     //服务模块缓存
-    private HashMap<String, IAresService> _classMappings = new HashMap<String, IAresService>();
+    private HashMap<String, IAresBaseService> _classMappings = new HashMap<String, IAresBaseService>();
 
     /**
      * 根据注解初始化
@@ -30,10 +31,10 @@ public class ServiceMgr
     private void init() throws BeansException
     {
         System.out.println("\n\n-----------------Registry Ares Service-----------------------");
-        String[] beanNamesForType = applicationContext.getBeanNamesForType(IAresService.class);
+        String[] beanNamesForType = applicationContext.getBeanNamesForType(IAresBaseService.class);
         for (String s : beanNamesForType)
         {
-            IAresService aresService = (IAresService) applicationContext.getBean(s);
+            IAresBaseService aresService = (IAresBaseService) applicationContext.getBean(s);
             AresServiceInfo serviceInfo = aresService.getServiceInfo();
             System.out.println(serviceInfo);
             String key = getKey(serviceInfo.getSystemId(), serviceInfo.getDataType(), serviceInfo.getSubDBName());
@@ -49,7 +50,7 @@ public class ServiceMgr
      * @param subDBName 子库
      * @return
      */
-    public IAresService getService(String systemId, String dataType, String subDBName)
+    public IAresBaseService getService(String systemId, String dataType, String subDBName)
     {
         String key = getKey(systemId, dataType, subDBName);
         return _classMappings.get(key);

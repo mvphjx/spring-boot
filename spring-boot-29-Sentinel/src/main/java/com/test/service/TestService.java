@@ -1,11 +1,11 @@
 package com.test.service;
 
 import com.alibaba.csp.sentinel.annotation.SentinelResource;
-import com.alibaba.csp.sentinel.slots.block.BlockException;
-import com.test.util.ExceptionUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.Random;
 
 @Service
 public class TestService
@@ -13,48 +13,41 @@ public class TestService
 
     @Autowired
     private RestTemplate restTemplate;
-
-    // 对应的 `handleException` 函数需要位于 `ExceptionUtil` 类中，并且必须为 static 函数.
-    @SentinelResource(value = "test", blockHandler = "handleException", blockHandlerClass = { ExceptionUtil.class })
-    public void test() throws Exception
+    //随机运行时间
+    public String timeOut()
     {
-        System.out.println("test通过");
-        //
-    }
-
-    public String rest()
-    {
+        int i = new Random().nextInt(500);
         try
         {
-            Thread.sleep(5000);
+            Thread.sleep(i);
         }
         catch (InterruptedException e)
         {
-            e.printStackTrace();
+            System.out.println("sleep time:" + i);
         }
         String url = "http://www.baidu.com/";
         String forObject = restTemplate.getForObject(url, String.class);
         return forObject;
     }
 
-    // 原函数
-    @SentinelResource(value = "hello", blockHandler = "exceptionHandler", fallback = "helloFallback")
-    public String hello(long s) throws Exception
+    //随机异常
+    @SentinelResource(value = "exception", blockHandler = "fallback", fallback = "fallback")
+    public String exception() throws Exception
     {
-        return String.format("Hello通过", s);
+        int i = new Random().nextInt(20);
+        if (i <= 10)
+        {
+            System.out.println("exception突然出现了一个异常:"+i);
+            throw new Exception("exception突然出现了一个异常");
+        }else{
+            System.out.println("exception正常请求:"+i);
+        }
+        String url = "http://www.baidu.com/";
+        String forObject = restTemplate.getForObject(url, String.class);
+        return forObject;
     }
-
-    // Fallback 函数，函数签名与原函数一致.
-    public String helloFallback(long s)
+    public String fallback()
     {
-        return String.format("helloFallbackhelloFallback", s);
-    }
-
-    // Block 异常处理函数，参数最后多一个 BlockException，其余与原函数一致.
-    public static String exceptionHandler(long s, BlockException ex)
-    {
-        // Do some log here.
-        ex.printStackTrace();
-        return "Oops, error occurred at " + s;
+        return "快速失败";
     }
 }

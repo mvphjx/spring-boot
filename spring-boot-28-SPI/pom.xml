@@ -11,7 +11,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<jdk.version>1.8</jdk.version>
 		<spring.cloud.version>2.0.0.RELEASE</spring.cloud.version>
-		<hystrix.version>1.5.12</hystrix.version>
+		<hystrix.version>1.5.18</hystrix.version>
 	</properties>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -99,14 +99,6 @@
 			<artifactId>logback-core</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.apache.httpcomponents</groupId>
-			<artifactId>httpcore</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.httpcomponents</groupId>
-			<artifactId>httpclient</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-api</artifactId>
 			<version>RELEASE</version>
@@ -128,17 +120,12 @@
 		<dependency>
 			<groupId>com.netflix.hystrix</groupId>
 			<artifactId>hystrix-javanica</artifactId>
-			<version>${hystrix.version}</version>
+			<version>1.5.18</version>
 		</dependency>
 		<dependency>
 			<groupId>com.netflix.hystrix</groupId>
 			<artifactId>hystrix-metrics-event-stream</artifactId>
-			<version>${hystrix.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.alibaba.csp</groupId>
-			<artifactId>sentinel-core</artifactId>
-			<version>1.6.3</version>
+			<version>1.5.18</version>
 		</dependency>
 		<!--spring-cloud LoadBalanced-->
 		<dependency>
