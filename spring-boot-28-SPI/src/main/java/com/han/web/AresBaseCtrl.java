@@ -11,11 +11,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Http RESTful 标准API
  */
-@Controller
+@RestController
 @RequestMapping("/api")
 public class AresBaseCtrl
 {
@@ -26,7 +27,6 @@ public class AresBaseCtrl
     @Autowired
     private X001Impl x001;
     @RequestMapping(value = "/do/{key}", method = RequestMethod.GET)
-    @ResponseBody
     public String key(@PathVariable String key)
     {
         String systemId = key, dataType = "", subDBName = "";

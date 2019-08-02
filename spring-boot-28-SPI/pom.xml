@@ -133,6 +133,12 @@
 			<artifactId>spring-cloud-commons</artifactId>
 			<version>2.1.0.RELEASE</version>
 		</dependency>
+		<!--webservice-->
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-spring-boot-starter-jaxws</artifactId>
+			<version>3.2.6</version>
+		</dependency>
 	</dependencies>
 
 </project>

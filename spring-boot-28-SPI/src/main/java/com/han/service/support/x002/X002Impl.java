@@ -46,8 +46,8 @@ public class X002Impl implements IAresTPService
         return null;
     }
 
-
-    public String getInfo()
+    //随机延迟
+    private String getInfo()
     {
         System.out.println(Thread.currentThread().getName());
         int i = new Random().nextInt(1000);
@@ -57,14 +57,14 @@ public class X002Impl implements IAresTPService
         }
         catch (InterruptedException e)
         {
-            e.printStackTrace();
+
         }
         String url = "http://www.baidu.com/";
         String forObject = restTemplate.getForObject(url, String.class);
         return forObject;
     }
 
-    public String fallback()
+    private String fallback()
     {
         return "服务超时";
     }
