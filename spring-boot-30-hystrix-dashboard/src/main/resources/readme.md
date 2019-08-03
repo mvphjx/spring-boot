@@ -10,10 +10,6 @@
    
         http://localhost:7951/exception
         
-  - 服务监控
-        
-        http://localhost:7951/hystrix        
-        
         
   - Hystrix配置参数讲解：
   

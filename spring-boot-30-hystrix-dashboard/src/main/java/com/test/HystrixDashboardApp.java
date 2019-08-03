@@ -12,11 +12,11 @@ import java.util.Arrays;
 
 @SpringBootApplication
 @EnableHystrixDashboard
-public class HystrixApp
+public class HystrixDashboardApp
 {
     public static void main(String[] args)
     {
-        ApplicationContext ctx = SpringApplication.run(HystrixApp.class, args);
+        ApplicationContext ctx = SpringApplication.run(HystrixDashboardApp.class, args);
         // 启动Sprign Boot
         System.out.println("Let's inspect the beans provided by Spring Boot:");
         String[] beanNames = ctx.getBeanDefinitionNames();
@@ -25,12 +25,5 @@ public class HystrixApp
         {
             System.out.println(beanName);
         }
-    }
-
-    @Bean
-    @LoadBalanced
-//    @SentinelRestTemplate(blockHandler = "handleException", blockHandlerClass = ExceptionUtil.class)
-    public RestTemplate restTemplate() {
-        return new RestTemplate();
     }
 }
