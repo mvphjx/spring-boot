@@ -4,7 +4,9 @@
  
   - 超时处理
   
-        http://localhost:7951/timeOut
+        http://localhost:7951/timeOut/demo
+        
+        http://localhost:7951/timeOut/test
   
   - 异常处理
    

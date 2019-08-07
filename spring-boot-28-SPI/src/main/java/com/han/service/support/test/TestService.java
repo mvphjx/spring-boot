@@ -1,4 +1,4 @@
-package com.han.service;
+package com.han.service.support.test;
 
 import com.han.spi.IAresService;
 import com.han.spi.data.AresMessageObject;
@@ -15,8 +15,8 @@ import java.util.Random;
 
 @Service
 @ConditionalOnClass
-//当配置 x001.enabled=true 时加载
-@ConditionalOnProperty(prefix = "x001 ", value = "enabled", havingValue = "true")
+//当配置 test.enabled=true 时加载
+@ConditionalOnProperty(prefix = "test ", value = "enabled", havingValue = "true")
 public class TestService implements IAresService
 {
 
@@ -24,15 +24,41 @@ public class TestService implements IAresService
     private RestTemplate restTemplate;
     private AresServiceInfo info;
 
-    //随机运行时间
-    @HystrixCommand(fallbackMethod = "fallback", threadPoolProperties = {
+    @Override
+    public AresServiceInfo getServiceInfo()
+    {
+        if (info == null)
+        {
+            info = new AresServiceInfo();
+            info.setSystemId("test");
+        }
+        return info;
+    }
+
+    @Override
+    @HystrixCommand(commandKey="TestService.test",fallbackMethod = "fallback", threadPoolProperties = {
             //10个核心线程池,超过20个的队列外的请求被拒绝; 当一切都是正常的时候，线程池一般仅会有1到2个线程激活来提供服务
-            @HystrixProperty(name = "coreSize", value = "10"), @HystrixProperty(name = "maxQueueSize", value = "100"),
+            @HystrixProperty(name = "coreSize", value = "5"), @HystrixProperty(name = "maxQueueSize", value = "50"),
             @HystrixProperty(name = "queueSizeRejectionThreshold", value = "20") }, commandProperties = {
             @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "2000"), //命令执行超时时间
             @HystrixProperty(name = "circuitBreaker.requestVolumeThreshold", value = "2"),//若3s一个窗口内失败三次, 则达到触发熔断的最少请求量
             @HystrixProperty(name = "circuitBreaker.sleepWindowInMilliseconds", value = "10000") })
-    public String timeOut()
+    public String test()
+    {
+        return timeOut();
+    }
+
+
+
+    @Override
+    public AresMessageObject search(String systemId, String dataType, String subDBName)
+    {
+        return null;
+    }
+
+
+    //随机运行时间
+    private String timeOut()
     {
         System.out.println(Thread.currentThread().getName());
         int i = new Random().nextInt(4000);
@@ -49,8 +75,10 @@ public class TestService implements IAresService
         return forObject;
     }
 
+
+
     //随机异常
-    public String exception() throws Exception
+    private String exception() throws Exception
     {
         System.out.println(Thread.currentThread().getName());
         int i = new Random().nextInt(20);
@@ -63,31 +91,8 @@ public class TestService implements IAresService
         return forObject;
     }
 
-    public String fallback()
+    private String fallback()
     {
-        return "快速失败";
-    }
-
-    @Override
-    public String test()
-    {
-        return timeOut();
-    }
-
-    @Override
-    public AresServiceInfo getServiceInfo()
-    {
-        if (info == null)
-        {
-            info = new AresServiceInfo();
-            info.setSystemId("test");
-        }
-        return info;
-    }
-
-    @Override
-    public AresMessageObject search(String systemId, String dataType, String subDBName)
-    {
-        return null;
+        return "访问超时，快速失败";
     }
 }

@@ -89,6 +89,11 @@
         <module>spring-boot-23-MongoDB</module>
         <module>spring-boot-13-MyBatis-XML</module>
         <module>spring-boot-24-WebSocket</module>
+        <module>spring-boot-28-SPI</module>
+        <module>spring-boot-29-Sentinel</module>
+        <module>spring-boot-30-hystrix</module>
+        <module>spring-boot-30-hystrix-dashboard</module>
+        <module>spring-boot-31-Feign</module>
     </modules>
 
     <repositories>

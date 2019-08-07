@@ -28,6 +28,13 @@
   接口设计：组合模式、继承模式
   
   
+##其他
+
+    http://localhost:7955/swagger-ui.html  
+    
+    http://localhost:7955/hystrix
+  
+  
         
 
                   

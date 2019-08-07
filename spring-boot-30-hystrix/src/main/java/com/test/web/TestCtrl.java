@@ -2,6 +2,7 @@ package com.test.web;
 
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
+import com.test.service.DemoService;
 import com.test.service.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,14 +15,20 @@ public class TestCtrl
 
     @Autowired
     private TestService service;
-
-    @GetMapping(value = "/timeOut")
+    @Autowired
+    private DemoService demoService;
+    @GetMapping(value = "/timeOut/test")
     @ResponseBody
     public String timeOut()
     {
         return service.timeOut();
     }
-
+    @GetMapping(value = "/timeOut/demo")
+    @ResponseBody
+    public String timeOutDemo()
+    {
+        return demoService.timeOut();
+    }
     @HystrixCommand(fallbackMethod = "fallback", threadPoolProperties = {
             //10个核心线程池,超过20个的队列外的请求被拒绝; 当一切都是正常的时候，线程池一般仅会有1到2个线程激活来提供服务
             @HystrixProperty(name = "coreSize", value = "10"),

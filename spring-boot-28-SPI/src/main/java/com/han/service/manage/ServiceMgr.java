@@ -40,6 +40,7 @@ public class ServiceMgr
             String key = getKey(serviceInfo.getSystemId(), serviceInfo.getDataType(), serviceInfo.getSubDBName());
             _classMappings.put(key, aresService);
         }
+        System.out.println("-----------------Registry Ares Service Success-----------------------\n\n");
     }
 
     /**
