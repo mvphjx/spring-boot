@@ -74,7 +74,7 @@ public class X002Impl implements IAresTPService
      * 如果 HystrixCommand注解  在内层方法  例如 private String getInfo（）上，将不会被代理，配置无效
      * @return
      */
-    @HystrixCommand(commandKey="X002Impl.test",fallbackMethod = "fallback", threadPoolProperties = {
+    @HystrixCommand(commandKey="X002Impl",fallbackMethod = "fallback", threadPoolProperties = {
             //10个核心线程池,超过20个的队列外的请求被拒绝; 当一切都是正常的时候，线程池一般仅会有1到2个线程激活来提供服务
             @HystrixProperty(name = "coreSize", value = "10"),
             //BlockingQueue的最大队列数，当设为-1，会使用SynchronousQueue，值为正时使用LinkedBlcokingQueue

@@ -11,14 +11,20 @@ public class Ares10Service extends AbstractAres10Service
 {
 
     private AresServiceInfo info;
+
     @Override
     public AresServiceInfo getServiceInfo()
     {
         if (info == null)
         {
             info = new AresServiceInfo();
-            info.setSystemId("Ares10Service");
+            info.setSystemId("Abis10Service");
         }
         return info;
+    }
+
+    public String fallback()
+    {
+        return "快速失败Abis10Service";
     }
 }

@@ -16,8 +16,12 @@ public class Ares10Service2 extends AbstractAres10Service
         if (info == null)
         {
             info = new AresServiceInfo();
-            info.setSystemId("Ares10Service2");
+            info.setSystemId("Abis10Service2");
         }
         return info;
+    }
+    public String fallback()
+    {
+        return "快速失败Abis10Service2";
     }
 }
