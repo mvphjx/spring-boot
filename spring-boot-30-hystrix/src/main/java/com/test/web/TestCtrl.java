@@ -9,6 +9,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Date;
+
+import static com.netflix.hystrix.contrib.javanica.annotation.HystrixException.RUNTIME_EXCEPTION;
+
 @RestController
 public class TestCtrl
 {
@@ -29,7 +33,8 @@ public class TestCtrl
     {
         return demoService.timeOut();
     }
-    @HystrixCommand(fallbackMethod = "fallback", threadPoolProperties = {
+    @HystrixCommand(fallbackMethod = "fallback",
+                    threadPoolProperties = {
             //10个核心线程池,超过20个的队列外的请求被拒绝; 当一切都是正常的时候，线程池一般仅会有1到2个线程激活来提供服务
             @HystrixProperty(name = "coreSize", value = "10"),
             //BlockingQueue的最大队列数，当设为-1，会使用SynchronousQueue，值为正时使用LinkedBlcokingQueue
@@ -46,14 +51,15 @@ public class TestCtrl
             @HystrixProperty(name = "circuitBreaker.sleepWindowInMilliseconds", value = "10000") })
     @GetMapping(value = "/exception")
     @ResponseBody
-    public String user() throws Exception
+    public String user()
     {
         return service.exception();
     }
 
-    public String fallback()
+    public String fallback(Throwable throwable)
     {
-        return "快速失败";
+        System.out.println("快速失败:"+System.currentTimeMillis());
+        return "快速失败"+new Date()+throwable;
     }
 
 }

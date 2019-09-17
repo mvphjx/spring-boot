@@ -24,6 +24,6 @@ public interface IAresBaseService
      * 其他通用方法
      * @return
      */
-    String test();
+    String test() throws Exception;
 
 }

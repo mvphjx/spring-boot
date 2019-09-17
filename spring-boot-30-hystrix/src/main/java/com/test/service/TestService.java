@@ -2,11 +2,16 @@ package com.test.service;
 
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
+import org.apache.tomcat.jni.Error;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import javax.xml.transform.Source;
+import java.util.Date;
 import java.util.Random;
+import java.util.ServiceConfigurationError;
+import java.util.logging.Logger;
 
 @Service
 public class TestService
@@ -40,14 +45,16 @@ public class TestService
     }
 
     //随机异常
-    public String exception() throws Exception
+    public String exception()
     {
         Thread th=Thread.currentThread();
         System.out.println(th.getName());
         int i = new Random().nextInt(20);
         if (i <= 10)
         {
-            throw new Exception("突然出现了一个异常");
+            throw new RuntimeException("突然出现了一个异常");
+        }else if(i<=15){
+            throw new ServiceConfigurationError("这是一个error");
         }
         String url = "http://www.baidu.com/";
         String forObject = restTemplate.getForObject(url, String.class);
@@ -56,7 +63,8 @@ public class TestService
 
     public String fallback()
     {
-        return "快速失败";
+        System.out.println("快速失败:"+System.currentTimeMillis());
+        return "快速失败"+new Date();
     }
 
 }
