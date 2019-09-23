@@ -6,8 +6,7 @@
     <title>PKI登录成功</title>
 </head>
 <body>
-<div>信息如下：</div>
+<div>PKI信息如下：</div>
 ${sessionScope.pkiInfo}
-<%=session.getAttribute("pkiInfo")%>
 </body>
 </html>
