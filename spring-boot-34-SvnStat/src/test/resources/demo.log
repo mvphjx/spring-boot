@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<log>
+<logentry revision="65">
+<author>hanjianxiang</author>
+<date>2018-12-29T10:14:39.643470Z</date>
+<paths>
+<path
+   text-mods="true"
+   kind="file"
+   action="M"
+   prop-mods="false">/trunk/src/web_common/src/main/resources/META-INF/resources/css/ui/gis/gis.css</path>
+<path
+   text-mods="true"
+   kind="file"
+   action="M"
+   prop-mods="false">/trunk/src/web_common/src/main/resources/META-INF/resources/js/abis/cloumn/portal_gis.js</path>
+<path
+   text-mods="true"
+   kind="file"
+   action="M"
+   prop-mods="false">/trunk/src/web_stat/src/main/resources/META-INF/resources/js/abis/largescreen/gishelper.js</path>
+</paths>
+<msg>gis</msg>
+</logentry>
+</log>
