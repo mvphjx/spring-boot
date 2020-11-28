@@ -20,7 +20,7 @@ import java.util.List;
 @Table(name = "t_company")
 public class Company implements Serializable
 {
-	private static final long serialVersionUID = 905654767215634L;
+    private static final long serialVersionUID = 905654767215634L;
 
 
 	@Id
@@ -62,4 +62,6 @@ public class Company implements Serializable
 	{
 		this.department = department;
 	}
+
 }
+
