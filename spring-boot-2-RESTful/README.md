@@ -37,3 +37,11 @@
 		 
 		 
 ----
+
+##HTTP长轮训实现
+
+ - 获取id=1的数据,如果没有更新，挂起30秒，如果有更新中断挂起，立即返回。
+    http://localhost:8080/listener/1
+    
+ - 更新id=1的数据
+http://localhost:8080/publishConfig/1
